@@ -56,9 +56,9 @@ export const loginController = async(req,res) => {
         }
         const user = await userModel.findOne({email})
         if(!user){
-            return res.status(500).send({
+            return res.send({
                 success : false,
-                message : "Email is not registered"
+                message : "Email is not registered",
             })
         }
         const match = await comparePassword(password , user.password)
