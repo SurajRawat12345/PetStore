@@ -1,21 +1,17 @@
 import dotenv from "dotenv";
 dotenv.config();
 import petModel from "../models/petModel.js";
-
-// Configuring Cloudinary
-import * as Cloudinary from 'cloudinary';
-
-Cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
+import getDataUri from './../utils/dataURI.js';
+import cloudinary from 'cloudinary';
 
 // To Post Pet
 export const postController = async(req,res) => {
     try{
         const { name , species , price , description , category } = req.body;
-        const result = await Cloudinary.uploader.upload(req.file.path);
+        const file = req.file;
+        const fileUri = getDataUri(file);
+        const result = await cloudinary.v2.uploader.upload(fileUri.content);
+
         if(!name){
             return res.status(409).send({message : "Pet's Name is required"});
         }
@@ -49,7 +45,7 @@ export const postController = async(req,res) => {
         })
     }
     catch(error){
-        //console.log(error);
+        console.log(error);
         res.status(500).send({
             success: false,
             msg: "Error while adding pet",

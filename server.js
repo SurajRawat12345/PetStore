@@ -7,9 +7,15 @@ import authRoutes from './routes/authroutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import petRoutes from './routes/petRoutes.js';
 import imageRoutes from './routes/imageRoutes.js';
+import cloudinary from 'cloudinary';
 
 // Configuring .env file variables
 dotenv.config();
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // Connecting Database
 mongoose.set('strictQuery', false);

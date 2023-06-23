@@ -1,5 +1,4 @@
 import express from "express";
-import multer from 'multer';
 const router = express.Router();
 import { requireSignIn  , isAdmin} from "../middlewares/authMiddleware.js";
 import { 
@@ -10,20 +9,13 @@ import {
     likeController,
     searchPetController,
 } from "../controllers/petController.js";
-
-
-const storage = multer.diskStorage({
-    filename: function(req, file, cb) {
-      cb(null, file.originalname);
-    }
-  });
-const upload = multer({ storage: storage });
+import singleUpload from './../middlewares/uploadMiddleware.js';
 
 // Get specific pet
 router.get('/:id', getIdController);
 
 // Upload Pet
-router.post('/post-pet' , upload.single('file') , postController);
+router.post('/post-pet' , requireSignIn , isAdmin , singleUpload , postController);
 
 // delete Pet
 router.delete('/delete-pet/:id', deletePetController);
