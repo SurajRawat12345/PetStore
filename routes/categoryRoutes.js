@@ -1,11 +1,12 @@
 import express from 'express';
 const router = express.Router();
+import { requireSignIn } from '../middlewares/authMiddleware.js';
 import { 
     addCategoryController , getCategoryController , deleteCategoryController , updateCategoryController 
     } from '../controllers/categoryController.js';
 
 // Adding Category Route
-router.post('/add' , addCategoryController);
+router.post('/add' , requireSignIn , addCategoryController);
 
 // Deleting Category Route
 router.delete('/delete/:id' , deleteCategoryController);
