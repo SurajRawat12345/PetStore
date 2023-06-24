@@ -9,7 +9,7 @@ import {
     likeController,
     searchPetController,
 } from "../controllers/petController.js";
-import singleUpload from './../middlewares/uploadMiddleware.js';
+import singleUpload from '../middlewares/uploadMiddleware.js';
 
 // Get specific pet
 router.get('/:id', getIdController);

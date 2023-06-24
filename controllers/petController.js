@@ -1,16 +1,13 @@
 import dotenv from "dotenv";
 dotenv.config();
 import petModel from "../models/petModel.js";
-import getDataUri from './../utils/dataURI.js';
+import getDataUri from '../utils/dataURI.js';
 import cloudinary from 'cloudinary';
 
 // To Post Pet
 export const postController = async(req,res) => {
     try{
         const { name , species , price , description , category } = req.body;
-        const file = req.file;
-        const fileUri = getDataUri(file);
-        const result = await cloudinary.v2.uploader.upload(fileUri.content);
 
         if(!name){
             return res.status(409).send({message : "Pet's Name is required"});
@@ -27,6 +24,12 @@ export const postController = async(req,res) => {
         if(!category){
             return res.status(409).send({message : "Pet's Category is required"});
         }
+        //const pet = await petModel.find()
+        // File upload
+        const file = req.file;
+        const fileUri = getDataUri(file);
+        const result = await cloudinary.v2.uploader.upload(fileUri.content);
+
         const new_pet = await new petModel({
             name,
             species,
