@@ -142,7 +142,7 @@ export const likeController = async(req,res) => {
                 { $pull : { likes : uid }} , {new : true});
             res.status(200).send({
                 success: true,
-                msg: "Updated pet likes",
+                msg: "Unliked Pet",
                 unliked_pet,
                 user,
             })
@@ -152,7 +152,7 @@ export const likeController = async(req,res) => {
                 {$push: { likes : uid }} , {new:true});
             res.status(200).send({
                 success: true,
-                msg: "Updated pet likes",
+                msg: "Liked Pet",
                 liked_pet,
                 user,
             })
