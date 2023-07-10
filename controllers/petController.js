@@ -28,7 +28,7 @@ export const postController = async(req,res) => {
         // File upload
         const file = req.file;
         const fileUri = getDataUri(file);
-        const result = await cloudinary.v2.uploader.upload(fileUri.content);
+        const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
 
         const new_pet = await new petModel({
             name,
@@ -37,8 +37,8 @@ export const postController = async(req,res) => {
             category,
             description,
             image: {
-                public_id : result.public_id, 
-                url : result.secure_url
+                public_id : mycloud.public_id, 
+                url : mycloud.secure_url
             },
         }).save()
         res.status(200).send({

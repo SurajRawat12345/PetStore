@@ -7,7 +7,7 @@ import authRoutes from './routes/authroutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import petRoutes from './routes/petRoutes.js';
 import imageRoutes from './routes/imageRoutes.js';
-import {v2 as cloudinary} from 'cloudinary';
+import cloudinary from 'cloudinary';
 
 // Configuring .env file variables
 dotenv.config();
@@ -28,7 +28,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-cloudinary.config({
+cloudinary.v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
