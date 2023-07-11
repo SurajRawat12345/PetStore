@@ -4,7 +4,14 @@ import userModel from '../models/userModel.js';
 // Protected route token based
 export const requireSignIn = async(req, res , next) => {
     try{
-        const decode = JWT.verify(req.headers.authorization , process.env.JWT_SECRET);
+        const {token} = req.cookies;
+        if(!token){
+            return res.status(401).send({
+                success : false,
+                msg : "please login first",
+            })
+        }
+        const decode = await JWT.verify(token , process.env.JWT_SECRET);
         req.user = decode; // Removes undefined_id or decoding
         next();
     }
