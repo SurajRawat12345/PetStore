@@ -24,7 +24,6 @@ export const postController = async(req,res) => {
         if(!category){
             return res.status(409).send({message : "Pet's Category is required"});
         }
-        //const pet = await petModel.find()
         // File upload
         const file = req.file;
         const fileUri = getDataUri(file);
