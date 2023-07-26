@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import petModel from "../models/petModel.js";
-import getDataUri from '../utils/dataUri.js';
+import getDataUri from '../utils/dataUri.js'
 import cloudinary from 'cloudinary';
 
 // To Post Pet
