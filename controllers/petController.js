@@ -26,7 +26,7 @@ export const postController = async(req,res) => {
         }
         // File upload
         const file = req.file;
-        const fileUri = getDataUri(file);
+        const fileUri = await getDataUri(file);
         const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
 
         const new_pet = await new petModel({
@@ -48,7 +48,7 @@ export const postController = async(req,res) => {
     }
     catch(error){
         console.log(error);
-        res.status(500).send({
+        res.send({
             success: false,
             msg: "Error while adding pet",
             error,
@@ -174,7 +174,7 @@ export const searchPetController = async(req,res) => {
         const results = await petModel.find({
             $or:[
                 {name: { $regex : keyword , $options : 'i'}},
-                { description : { $regex : keyword , $options : 'i' }},
+                { species : { $regex : keyword , $options : 'i' }},
                 {category : { $regex : keyword , $options : 'i'}} 
             ],
         })
