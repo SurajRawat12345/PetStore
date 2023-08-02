@@ -2,23 +2,18 @@ import express from "express";
 const router = express.Router();
 import { requireSignIn  , isAdmin} from "../middlewares/authMiddleware.js";
 import { 
-    postController, 
     deletePetController, 
     getallController,
     getIdController,
     likeController,
     searchPetController,
 } from "../controllers/petController.js";
-import singleUpload from '../middlewares/uploadMiddleware.js';
 
 // Get specific pet
 router.get('/:id', getIdController);
 
-// Upload Pet
-router.post('/post-pet' , requireSignIn , isAdmin , singleUpload , postController);
-
 // delete Pet
-router.delete('/delete-pet/:id', deletePetController);
+router.delete('/delete-pet/:id', requireSignIn ,isAdmin , deletePetController);
 
 // Get All Posts
 router.get('/all-pets/:page' , getallController);

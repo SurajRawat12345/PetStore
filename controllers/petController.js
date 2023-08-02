@@ -1,60 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 import petModel from "../models/petModel.js";
-import getDataUri from "../utils/dataUri.js";
-import cloudinary from "cloudinary";
-
-// To Post Pet
-export const postController = async(req,res) => {
-    try{
-        const { name , species , price , description , category } = req.body;
-
-        if(!name){
-            return res.status(409).send({message : "Pet's Name is required"});
-        }
-        if(!description){
-            return res.status(409).send({message : "Pet's Description is required"});
-        }
-        if(!species){
-            return res.status(409).send({message : "Pet's Species is required"});
-        }
-        if(!price){
-            return res.status(409).send({message : "pet's price is required"});
-        }
-        if(!category){
-            return res.status(409).send({message : "Pet's Category is required"});
-        }
-        // File upload
-        const file = req.file;
-        const fileUri = await getDataUri(file);
-        const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
-
-        const new_pet = await new petModel({
-            name,
-            species,
-            price,
-            category,
-            description,
-            image: {
-                public_id : mycloud.public_id, 
-                url : mycloud.secure_url
-            },
-        }).save()
-        res.status(200).send({
-            success : true,
-            message : "Pet Added successfully",
-            new_pet
-        })
-    }
-    catch(error){
-        console.log(error);
-        res.send({
-            success: false,
-            msg: "Error while adding pet",
-            error,
-        })
-    }
-}
 
 // To delete pet
 export const deletePetController = async(req,res) => {
