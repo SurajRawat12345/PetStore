@@ -174,7 +174,7 @@ export const searchPetController = async(req,res) => {
         const results = await petModel.find({
             $or:[
                 {name: { $regex : keyword , $options : 'i'}},
-                { species : { $regex : keyword , $options : 'i' }},
+                {species : { $regex : keyword , $options : 'i' }},
                 {category : { $regex : keyword , $options : 'i'}} 
             ],
         })
