@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/authroutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import petRoutes from './routes/petRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import imageRoutes from './routes/imageRoutes.js';
 import cloudinary from 'cloudinary';
 import cookieParser from 'cookie-parser';
@@ -43,6 +44,7 @@ cloudinary.v2.config({
 app.use('/api/v1/auth' , authRoutes);
 app.use('/api/v1/category' , categoryRoutes);
 app.use('/api/v1/pet' , petRoutes);
+app.use('/api/v1/order' , orderRoutes);
 app.use('/api/v1/images' , imageRoutes);
 
 app.get('/' , async(req,res) => {
