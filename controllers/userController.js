@@ -69,12 +69,7 @@ export const loginController = async(req,res) => {
             })
         };
         // token creation
-        const token = await JWT.sign({ _id : user._id} , process.env.JWT_SECRET);
-        await res.cookie("token" , token , {
-            expires : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-            httpOnly : true,
-            sameSite : "none"
-        });
+        const token = await JWT.sign({ _id : user._id} , process.env.JWT_SECRET, { expiresIn: '7d' });
         res.status(200).send({
             success : true,
             message : "login successfully",
@@ -92,21 +87,6 @@ export const loginController = async(req,res) => {
             success : false,
             message : "Error in login",
             error
-        })
-    }
-}
-export const logoutController = async(req,res) => {
-    try{
-        res.clearCookie('token',{path : '/'})
-        res.status(200).send({
-            success : true,
-            msg : "Logout Successfully"
-        })
-    }
-    catch(error){
-        res.status(500).send({
-            success : false,
-            msg : "Error in logout",  
         })
     }
 }

@@ -4,16 +4,8 @@ import userModel from '../models/userModel.js';
 // Protected route token based
 export const requireSignIn = async(req, res , next) => {
     try{
-        const {token} = req.cookies;
-        const verifyUser = await JWT.verify(token , process.env.JWT_SECRET);
-        const rootUser = await userModel.findOne({_id : verifyUser._id});
-        if(!rootUser){
-            return res.status(401).send({
-                success: false,
-                msg: "User Not Found",
-            })
-        }
-        req.user = verifyUser; // Removes undefined_id or decoding
+        const decode = JWT.verify(req.headers.authorization , process.env.JWT_SECRET);
+        req.user = decode; 
         next();
     }
     catch(error){
