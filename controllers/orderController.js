@@ -61,10 +61,19 @@ export const getAllOrders = async(req,res) => {
         const allOrders = await orderModel.find({})
         .limit(perPage*page)
         .sort({createdAt: -1});
+        const images = [] , userNames = [];
+        for(let i = 0 ; i < allOrders.length ; i++){
+            const abc = await petModel.findOne({_id: allOrders[i].pet});
+            images.push(abc.image);
+            const def = await userModel.findOne({_id: allOrders[i].userBuyed});
+            userNames.push(def.name);
+        }
         res.status(200).send({
             success: true,
             msg: "Fetched all Orders",
             allOrders,
+            images,
+            userNames,
         })
     }
     catch(err){
@@ -80,13 +89,17 @@ export const getAllOrders = async(req,res) => {
 export const getOwnOrder = async(req,res) => {
     try{
         const{uid} = req.params;
-        const own_orders = await userModel.findOne({_id : uid});
+        const myOrder = await orderModel.find({userBuyed: uid}); 
+        const arr = [];
+        for(let i = 0 ; i < myOrder.length ; i++){
+            const abc = await petModel.findOne({_id: myOrder[i].pet});
+            arr.push(abc);
+        }
         res.status(200).send({
             success : true,
             msg : "Getting Own Orders",
-            own_orders : {
-                orders : own_orders.orders,
-            } ,
+            myOrder,
+            arr,
         })
     }
     catch(err){
