@@ -31,17 +31,26 @@ export const updateUserArray = async(req,res) => {
     try{
         const {uid} = req.params;
         const {oid} = req.params;
+        const {pid} = req.params;
         const findUser = await userModel.findOneAndUpdate(
             {_id : uid},
-            {$push: { orders : oid }} ,
-            {new:true},
+            {$push: { orders : oid }},
+            {new: true},
+        )
+        const petOwner = await petModel.findOneAndUpdate(
+            {_id: pid},
+            {$push: {orders: oid}},
+            {new: true},
         )
         res.status(200).send({
-            success : true,
+            success: true,
             msg: "Updated order array",
-            findUser : {
+            findUser: {
                 orders : findUser.orders,
             },
+            petOwner: {
+                orders: petOwner.orders,
+            }
         })
     }
     catch(err){

@@ -14,7 +14,7 @@ import {
 router.post('/place-order/:uid/:pid' , requireSignIn , placingOrder);
 
 // Updating User Model Array of Orders
-router.patch('/update-order-array/:uid/:oid' , requireSignIn , updateUserArray);
+router.patch('/update-order-array/:uid/:oid/:pid' , requireSignIn , updateUserArray);
 
 // Get all Orders     /* ADMIN ONLY ROUTE */
 router.get('/get-all/:page' , requireSignIn , isAdmin , getAllOrders); 
